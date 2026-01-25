@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Top-rated house cleaning, deep cleaning, move-in/out, commercial & Airbnb services in Midland TX. Trusted local team. Free quotes!">
+  <meta name="description" content="Top-rated house cleaning, deep cleaning, move-in/out, commercial & Airbnb services in Midland TX. Trusted local team. Free quotes & save!">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.goldengrovecleaning.com/">
 
-  <!-- Preconnects -->
+  <!-- Preconnects for faster external connections -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://widgets.leadconnectorhq.com">
   <link rel="preconnect" href="https://api.leadconnectorhq.com">
   <link rel="preconnect" href="https://link.msgsndr.com">
 
-  <!-- Preload LCP image -->
+  <!-- Preload potential LCP image -->
   <link rel="preload" as="image" href="/images/cleaning-services-midland-tx.jpg" fetchpriority="high">
 
   <title>#1 House & Commercial Cleaning Services in Midland TX | Golden Grove Cleaning</title>
@@ -42,10 +42,10 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
   <link rel="manifest" href="/favicon/site.webmanifest">
 
-  <!-- Fonts -->
+  <!-- Fonts with swap to avoid invisible text -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
 
-  <!-- Schema -->
+  <!-- Clean schema (LocalBusiness focus) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -109,7 +109,8 @@
     .card{border:1px solid #e5e7eb;border-radius:var(--radius);padding:2.2rem;background:#fff}
     footer{background:#020617;color:#cbd5f5;padding:3.5rem 0;text-align:center}
     footer a{color:#facc15;font-weight:700;text-decoration:none}
-    .form-wrapper{height:686px;width:100%;max-width:800px;margin:0 auto}
+    .form-wrapper{height:686px;width:100%;max-width:800px;margin:0 auto;min-height:400px}
+    #chat-container{display:none}
   </style>
 </head>
 <body>
@@ -154,18 +155,8 @@
   <section>
     <div class="container">
       <h2>Contact Us Today</h2>
-      <div class="form-wrapper">
-        <iframe
-          src="https://api.leadconnectorhq.com/widget/form/Qw27XO1tcXra7A4hA2hy"
-          style="width:100%;height:100%;border:none"
-          id="inline-Qw27XO1tcXra7A4hA2hy"
-          data-layout='{"id":"INLINE"}'
-          data-trigger-type="alwaysShow"
-          data-activation-type="alwaysActivated"
-          data-deactivation-type="neverDeactivate"
-          data-form-name="CBC - Contact Us - A2P Verified"
-          title="Contact Us Form"
-        ></iframe>
+      <div class="form-wrapper" id="form-lazy-root">
+        <!-- Form loads here via JS -->
       </div>
     </div>
   </section>
@@ -179,11 +170,80 @@
   </div>
 </footer>
 
-<script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
 
-<!-- Third-party scripts deferred -->
-<script async src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="68768369422fe429c508515a"></script>
-<script defer src="https://link.msgsndr.com/js/form_embed.js"></script>
+<!-- Lazy-load container for chat -->
+<div id="chat-container"></div>
+
+<!-- Lazy loading script for third-party widgets -->
+<script>
+  function loadLeadConnectorForm() {
+    const wrapper = document.getElementById('form-lazy-root');
+    if (!wrapper || wrapper.dataset.loaded) return;
+    wrapper.dataset.loaded = 'true';
+
+    const iframe = document.createElement('iframe');
+    iframe.src = "https://api.leadconnectorhq.com/widget/form/Qw27XO1tcXra7A4hA2hy";
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.style.border = "none";
+    iframe.id = "inline-Qw27XO1tcXra7A4hA2hy";
+    iframe.setAttribute('data-layout', '{"id":"INLINE"}');
+    iframe.setAttribute('data-trigger-type', "alwaysShow");
+    iframe.setAttribute('data-activation-type', "alwaysActivated");
+    iframe.setAttribute('data-deactivation-type', "neverDeactivate");
+    iframe.setAttribute('data-form-name', "CBC - Contact Us - A2P Verified");
+    iframe.title = "Contact Us Form";
+    wrapper.appendChild(iframe);
+
+    // Load form embed script if needed
+    const script = document.createElement('script');
+    script.src = "https://link.msgsndr.com/js/form_embed.js";
+    script.defer = true;
+    document.body.appendChild(script);
+  }
+
+  function loadChatWidget() {
+    const container = document.getElementById('chat-container');
+    if (container.dataset.loaded) return;
+    container.dataset.loaded = 'true';
+
+    const script = document.createElement('script');
+    script.src = "https://widgets.leadconnectorhq.com/loader.js";
+    script.setAttribute('data-resources-url', "https://widgets.leadconnectorhq.com/chat-widget/loader.js");
+    script.setAttribute('data-widget-id', "68768369422fe429c508515a");
+    script.async = true;
+    document.body.appendChild(script);
+  }
+
+  // Lazy load on scroll / interaction
+  const observerOptions = { rootMargin: '200px 0px' };
+  const formObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      loadLeadConnectorForm();
+      formObserver.disconnect();
+    }
+  }, observerOptions);
+
+  const chatObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      loadChatWidget();
+      chatObserver.disconnect();
+    }
+  }, observerOptions);
+
+  // Observe form section
+  const formRoot = document.getElementById('form-lazy-root');
+  if (formRoot) formObserver.observe(formRoot);
+
+  // Observe bottom of page for chat (or fallback after 8s)
+  const sentinel = document.createElement('div');
+  sentinel.style.height = '1px';
+  document.body.appendChild(sentinel);
+  chatObserver.observe(sentinel);
+
+  setTimeout(loadChatWidget, 8000); // Fallback: load chat after 8s if no scroll
+</script>
 
 </body>
 </html>
