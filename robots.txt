@@ -1,0 +1,32 @@
+User-agent: *
+Allow: /
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-content/cache/
+Disallow: /cgi-bin/
+Disallow: /?s=*
+Disallow: /*?*
+
+# Allow important pages & service pages explicitly (optional but good practice)
+Allow: /deep-house-cleaning-midland-tx/
+Allow: /move-in-move-out-cleaning-midland-tx/
+Allow: /recurring-house-cleaning-midland-tx/
+Allow: /airbnb-vacation-rental-cleaning-midland-tx/
+Allow: /post-construction-cleaning-midland-tx/
+
+# Sitemap reference (very important for discovery & indexing)
+Sitemap: https://www.goldengrovecleaning.com/sitemap.xml
+
+# Crawl-delay (optional – helps with server load, especially on shared hosting)
+Crawl-delay: 10
+
+# Specific bots that sometimes cause issues
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
