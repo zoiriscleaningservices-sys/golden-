@@ -4,24 +4,32 @@ Disallow: /wp-admin/
 Disallow: /wp-includes/
 Disallow: /wp-content/plugins/
 Disallow: /wp-content/cache/
+Disallow: /wp-content/uploads/backup/
 Disallow: /cgi-bin/
 Disallow: /?s=*
 Disallow: /*?*
+Disallow: /feed/
+Disallow: /trackback/
+Disallow: /comments/
+Disallow: /*.pdf$
+Disallow: /*.doc$
+Disallow: /*.zip$
 
-# Allow important pages & service pages explicitly (optional but good practice)
+# Explicitly allow key public pages (helps in some edge cases)
 Allow: /deep-house-cleaning-midland-tx/
 Allow: /move-in-move-out-cleaning-midland-tx/
 Allow: /recurring-house-cleaning-midland-tx/
 Allow: /airbnb-vacation-rental-cleaning-midland-tx/
 Allow: /post-construction-cleaning-midland-tx/
+Allow: /House-Cleaning_Services-Midland-TX/
 
-# Sitemap reference (very important for discovery & indexing)
+# Sitemap (very important – tells search engines where to find all your pages)
 Sitemap: https://www.goldengrovecleaning.com/sitemap.xml
 
-# Crawl-delay (optional – helps with server load, especially on shared hosting)
+# Optional: gentle crawl delay to avoid overloading your server
 Crawl-delay: 10
 
-# Specific bots that sometimes cause issues
+# Block resource-heavy / low-value bots that don't help SEO
 User-agent: AhrefsBot
 Disallow: /
 
@@ -29,4 +37,13 @@ User-agent: SemrushBot
 Disallow: /
 
 User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: BLEXBot
 Disallow: /
