@@ -57,30 +57,39 @@
   }
   </script>
 
-  <!-- Fixed Flip Card – FRONT visible first, flips to BACK -->
+  <!-- Flip Card – hover on desktop, tap on mobile, only one open -->
   <style>
     .flip-card {
       perspective: 1200px;
       width: 100%;
-      max-width: 320px;
-      height: 360px;
+      max-width: 340px;
+      height: 380px;
       margin: 0 auto;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .flip-card-inner {
       position: relative;
       width: 100%;
       height: 100%;
-      transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); /* very smooth overshoot */
       transform-style: preserve-3d;
-      box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
       border-radius: 1.25rem;
-      /* FRONT visible first */
-      transform: rotateY(0deg);
+      transform: rotateY(0deg); /* FRONT visible first */
     }
 
-    .flip-card.flipped .flip-card-inner,
-    .flip-card:hover .flip-card-inner {
+    /* Desktop hover */
+    @media (hover: hover) and (pointer: fine) {
+      .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+      }
+    }
+
+    /* Mobile tap stays open */
+    .flip-card.flipped .flip-card-inner {
       transform: rotateY(180deg);
     }
 
@@ -103,7 +112,7 @@
     .front-content {
       position: relative;
       height: 100%;
-      padding: 1.5rem;
+      padding: 1.8rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -111,11 +120,11 @@
     }
 
     .badge {
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(6px);
-      padding: 0.4rem 1rem;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(8px);
+      padding: 0.45rem 1.1rem;
       border-radius: 9999px;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 600;
       width: fit-content;
       align-self: flex-start;
@@ -130,43 +139,43 @@
     .circle {
       position: absolute;
       border-radius: 50%;
-      filter: blur(22px);
-      animation: float 4s infinite ease-in-out;
+      filter: blur(24px);
+      animation: float 4.5s infinite ease-in-out;
     }
 
-    #c1 { background: #ffbb66; width: 130px; height: 130px; left: 10%; top: 10%; animation-delay: 0s; }
-    #c2 { background: #ff8866; width: 200px; height: 200px; left: 30%; top: -15%; animation-delay: -1.2s; }
-    #c3 { background: #ff2233;  width: 70px;  height: 70px;  left: 70%; top: 25%;  animation-delay: -2.4s; }
+    #c1 { background: #ffbb66; width: 140px; height: 140px; left: 10%; top: 10%; }
+    #c2 { background: #ff8866; width: 210px; height: 210px; left: 35%; top: -10%; animation-delay: -1.4s; }
+    #c3 { background: #ff2233;  width: 80px;  height: 80px;  left: 70%; top: 30%;  animation-delay: -2.8s; }
 
     @keyframes float {
       0%, 100% { transform: translateY(0) scale(1); }
-      50%      { transform: translateY(25px) scale(1.05); }
+      50%      { transform: translateY(30px) scale(1.08); }
     }
 
     .service-title {
-      font-size: 1.25rem;
+      font-size: 1.35rem;
       font-weight: bold;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.25rem;
     }
 
     .service-subtitle {
-      font-size: 0.875rem;
-      color: rgba(255,255,255,0.65);
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.7);
+      margin-top: 0.35rem;
     }
 
     .back-content {
       position: relative;
       z-index: 2;
       height: 100%;
-      padding: 2.5rem 2rem;
+      padding: 3rem 2.5rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 1.75rem;
+      gap: 2rem;
       color: white;
       text-align: center;
     }
@@ -175,28 +184,28 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(135deg, #ff9966 0%, transparent 70%);
-      opacity: 0.15;
-      animation: pulse 8s infinite;
+      opacity: 0.2;
+      animation: pulse 10s infinite;
     }
 
     @keyframes pulse {
-      0%, 100% { opacity: 0.15; }
-      50%      { opacity: 0.35; }
+      0%, 100% { opacity: 0.2; }
+      50%      { opacity: 0.4; }
     }
 
-    /* Mobile fixes */
+    /* Mobile sizing & spacing */
     @media (max-width: 640px) {
-      .flip-card { max-width: 360px; height: 400px; }
-      .front-content { padding: 1.8rem; }
-      .service-title { font-size: 1.4rem; }
-      .back-content { padding: 3rem 2.2rem; gap: 2rem; }
-      .back-content strong { font-size: 2rem; }
-      .back-content p { font-size: 1.1rem; line-height: 1.55; }
+      .flip-card { max-width: 380px; height: 420px; }
+      .front-content { padding: 2rem; }
+      .service-title { font-size: 1.5rem; }
+      .back-content { padding: 3.5rem 2.8rem; gap: 2.3rem; }
+      .back-content strong { font-size: 2.2rem; }
+      .back-content p { font-size: 1.2rem; line-height: 1.6; }
     }
 
     @media (max-width: 400px) {
-      .flip-card { height: 380px; }
-      .back-content { padding: 2.5rem 1.8rem; }
+      .flip-card { height: 400px; }
+      .back-content { padding: 3rem 2.2rem; }
     }
   </style>
 </head>
@@ -275,20 +284,20 @@
   </div>
 </section>
 
-<!-- SERVICES – FRONT visible first -->
+<!-- SERVICES -->
 <section class="py-16 md:py-24 bg-white">
   <div class="max-w-7xl mx-auto px-6">
     <h2 class="text-3xl md:text-4xl font-bold text-center text-brand-green mb-4">
       Our Cleaning Services
     </h2>
     <p class="text-center text-base md:text-lg text-gray-600 mb-10 md:mb-12">
-      Hover (desktop) or tap (mobile) each card to see details.
+      Hover on desktop or tap on mobile to view details (only one card stays open)
     </p>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 justify-items-center">
 
       <!-- House Cleaning -->
-      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card" onclick="toggleCard(this)">
         <div class="flip-card-inner">
           <!-- FRONT – visible first -->
           <div class="flip-card-front">
@@ -312,7 +321,7 @@
             </div>
           </div>
 
-          <!-- BACK – shown on hover/tap -->
+          <!-- BACK -->
           <div class="flip-card-back">
             <div class="back-content">
               <strong class="text-2xl md:text-3xl">House Cleaning</strong>
@@ -328,7 +337,7 @@
       </div>
 
       <!-- Deep Cleaning -->
-      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card" onclick="toggleCard(this)">
         <div class="flip-card-inner">
           <div class="flip-card-front">
             <div class="front-content">
@@ -364,47 +373,9 @@
         </div>
       </div>
 
-      <!-- Repeat the same pattern for the other 6 services -->
-      <!-- Just change the text in <strong>, <p>, and <span> in service-title -->
-
-      <!-- Example: Move-In Cleaning -->
-      <div class="flip-card" onclick="this.classList.toggle('flipped')">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <div class="front-content">
-              <small class="badge">Service</small>
-              <div class="floating-circles">
-                <div class="circle" id="c1"></div>
-                <div class="circle" id="c2"></div>
-                <div class="circle" id="c3"></div>
-              </div>
-              <div class="bg-black/60 backdrop-blur-md rounded-xl p-5 mt-auto shadow-lg">
-                <div class="service-title">
-                  <span>Move-In Cleaning</span>
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffbb66" stroke-width="2.5">
-                    <path d="M4 20h16M6 4l12 16M6 20l12-16" stroke-linecap="round"/>
-                    <circle cx="12" cy="12" r="3.5"/>
-                  </svg>
-                </div>
-                <p class="service-subtitle mt-1">Full Home • Premium</p>
-              </div>
-            </div>
-          </div>
-          <div class="flip-card-back">
-            <div class="back-content">
-              <strong class="text-2xl md:text-3xl">Move-In Cleaning</strong>
-              <p class="text-sm md:text-base leading-relaxed opacity-90 max-w-[90%]">
-                Deep move-in cleaning to make your new home spotless, fresh, and ready for you to settle in.
-              </p>
-              <a href="#" class="px-10 py-4 bg-[#ff9966] text-[#151515] font-bold rounded-full text-base hover:bg-orange-400 transition shadow-md">
-                Learn More
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ... add the remaining 5 cards the same way ... -->
+      <!-- Add remaining cards here using the same structure -->
+      <!-- Move-In, Move-Out, Commercial, Airbnb, Post-Construction, Carpet -->
+      <!-- Change only the text inside strong, p, and service-title span -->
 
     </div>
   </div>
@@ -433,6 +404,24 @@
 
 <script>
   lucide.createIcons();
+
+  function toggleCard(clickedCard) {
+    // Only apply on touch devices (mobile/tablet)
+    if (!window.matchMedia("(hover: hover)").matches) {
+      const allCards = document.querySelectorAll('.flip-card');
+
+      // Close all others
+      allCards.forEach(card => {
+        if (card !== clickedCard) {
+          card.classList.remove('flipped');
+        }
+      });
+
+      // Toggle the clicked one
+      clickedCard.classList.toggle('flipped');
+    }
+    // On desktop (hover capable) we do nothing here — CSS :hover handles it
+  }
 </script>
 
 </body>
